@@ -1,0 +1,75 @@
+Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.
+ 
+
+Example 1:
+
+Input: s = "()"
+Output: true
+Example 2:
+
+Input: s = "()[]{}"
+Output: true
+Example 3:
+
+Input: s = "(]"
+Output: false
+
+/*code*/
+import java.util.*;
+
+class Solution {
+    public boolean isValid(String s) {
+        /* if string length is odd number then there at least 
+         * one bracket with no close bracket to match it. */
+        if (s.length() % 2 != 0) 
+            return false;
+        char[] c = s.toCharArray();
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < c.length; i++) {      
+            /* One:
+            if (c[i] == '(' || c[i] == '[' || c[i] == '{') {
+                stack.push(c[i]);
+            }
+            if (c[i] == ')') {
+                if (stack.isEmpty() || stack.pop() != '(')
+                   return false;
+            }
+            if (c[i] == ']') {
+                if (stack.isEmpty() || stack.pop() != '[')
+                   return false;
+            }
+            if (c[i] == '}') {
+                if (stack.isEmpty() || stack.pop() != '{')
+                   return false;
+            }
+            */ Two:
+            switch (c[i]) {
+                case '(' : 
+                case '[' : 
+                case '{' : 
+                    stack.push(c[i]); 
+                    break;
+                case ')' : 
+                    if (stack.isEmpty() || stack.pop() != '(')
+                       return false;
+                    break;
+                case ']' :
+                    if (stack.isEmpty() || stack.pop() != '[')
+                       return false;
+                    break;
+                case '}' :
+                    if (stack.isEmpty() || stack.pop() != '{')
+                       return false;
+                    break;
+            }
+        }
+        //after loop we need to check if the stack is empty. If it is not empty then if stack that means we have unused brackets.
+        return stack.isEmpty(); 
+    }
+}
